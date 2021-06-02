@@ -1,4 +1,3 @@
-
 from flask import Blueprint
 from app import app, db, token_required
 from flask import request
@@ -126,9 +125,14 @@ def signin():
                     response = app.response_class(
                         response=json.dumps({
                             "message": 'already login',
-                            "status": 403,
+                            "user": {
+                                    "id": str(mydoc[0]['_id']),
+                                    "email": email,
+                                    "token": mydoc[0]['token'].decode('utf-8')
+                                },
+                            "status": 200,
                         }),
-                        status=403,
+                        status=200,
                         mimetype='application/json'
                     )
                     return response
